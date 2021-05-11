@@ -35,7 +35,7 @@ func main() {
 	devicesCsvPath := flag.String("devices-csv", "", "path to CSV file with list of devices")
 	itemsCsvPath := flag.String("items-csv", "", "path to CSV file with list of common and explosive items")
 	writeFiles := flag.Bool("w", false, "Write output to files instead of stdout (default: No)")
-	templatesDir := flag.String("templates-dir", ".", "path to directory where template files (.tpl) reside")
+	templatesDir := flag.String("templates-dir", "templates", "path to directory where template files (.tpl) reside")
 	flag.Parse()
 
 	if _, err := os.Stat(*templatesDir); os.IsNotExist(err) {
