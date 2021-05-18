@@ -1,9 +1,9 @@
-# arsenal - Complementary faction configurator for Liberation mission for Arma 3
+# Arsenal - complementary faction configurator for Arma 3 Liberation mission
 
-Generates SQF code from provided CSV tables which is then consumed by Arma 3 Liberation mission (https://github.com/StiegOlSauer/pclf_liberation.Altis). That allows to design whole faction by putting its properties into a spreadsheet instead of coding it in mission files. Liberation factions are quit complex, so the main benefits from this approach are: 
-1. Integrity: it is only one file to edit instead of multitude of SQFs
-2. Convenience: faction features are logically divided on several independent groups, each requires to fill several properties
-3. Maintainability: there is no need to adapt faction file to changes in mission logic
+Generates SQF code from provided CSV tables which is then consumed by Arma 3 Liberation mission (https://github.com/StiegOlSauer/pclf_liberation.Altis). That allows to design whole faction by putting its properties into a convenient spreadsheet instead of coding it in multitude of mission files. Liberation factions are quite complex, so the main benefits from this approach are: 
+1. Integrity: separate spreadsheets for each faction, all data in one place
+2. Convenience: faction features are logically divided on several independent pages, each exposes manageable amount of properties
+3. Easy maintenance: each file contains only faction-specific data, so it is not affected by any changes in mission logic
 
 Currently available entities:
 * weapons
