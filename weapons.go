@@ -36,7 +36,6 @@ const (
 )
 
 const (
-	// wpnTypeStarting WeaponType = "Starting"
 	wpnTypeRifle     WeaponType = "Rifle"
 	wpnTypeRifleGL   WeaponType = "RifleGL"
 	wpnTypeCarbine   WeaponType = "Carbine"

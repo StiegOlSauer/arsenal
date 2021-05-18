@@ -28,12 +28,14 @@ type ArmaEntityType interface {
 }
 
 func main() {
-	wpnsCsvPath := flag.String("weapons-csv", "", "path to CSV file with weapon weights")
-	vestsCsvPath := flag.String("vests-csv", "", "path to CSV file with vests weights")
-	opticsCsvPath := flag.String("optics-csv", "", "path to CSV file with optics list")
-	uniformsCsvPath := flag.String("uniforms-csv", "", "path to CSV file with list of uniforms")
-	devicesCsvPath := flag.String("devices-csv", "", "path to CSV file with list of devices")
-	itemsCsvPath := flag.String("items-csv", "", "path to CSV file with list of common and explosive items")
+	wpnsCsvPath := flag.String("weapons", "", "path to CSV file with weapon weights")
+	vestsCsvPath := flag.String("vests", "", "path to CSV file with vests weights")
+	opticsCsvPath := flag.String("optics", "", "path to CSV file with optics list")
+	uniformsCsvPath := flag.String("uniforms", "", "path to CSV file with list of uniforms")
+	devicesCsvPath := flag.String("devices", "", "path to CSV file with list of devices")
+	itemsCsvPath := flag.String("items", "", "path to CSV file with list of common and explosive items")
+	squadsCsvPath := flag.String("squads", "", "path to CSV file with list of faction roles and squad compositions")
+	vehiclesCsvPath := flag.String("vehicles", "", "path to CSV file with list of faction vehicles")
 	writeFiles := flag.Bool("w", false, "Write output to files instead of stdout (default: No)")
 	templatesDir := flag.String("templates-dir", "templates", "path to directory where template files (.tpl) reside")
 	flag.Parse()
@@ -102,6 +104,26 @@ func main() {
 			log.Fatal("Failed to process common items:", err)
 		}
 	}
+
+	if *squadsCsvPath != "" {
+		if _, err := os.Stat(*squadsCsvPath); err == os.ErrNotExist {
+			log.Fatal("File %s does not exist, exiting!", squadsCsvPath)
+		}
+		err := processSquads(squadsCsvPath, *writeFiles, *templatesDir)
+		if err != nil {
+			log.Fatal("Failed to generate roles and squads:", err)
+		}
+	}
+
+	if *vehiclesCsvPath != "" {
+		if _, err := os.Stat(*vehiclesCsvPath); err == os.ErrNotExist {
+			log.Fatal("File %s does not exist, exiting!", vehiclesCsvPath)
+		}
+		err := processVehicles(vehiclesCsvPath, *writeFiles, *templatesDir)
+		if err != nil {
+			log.Fatal("Failed to generate vehicles:", err)
+		}
+	}
 }
 
 func createDir(dirname string) error {
@@ -159,4 +181,11 @@ func joinTypes(base string, str ArmaEntityType, suffix string) string {
 	}
 
 	return base + spacer + fmt.Sprintf("_%s%ss", strings.ToLower(str.ToString()), suffix)
+}
+
+func getCsvFieldName(s interface{}, structField string) string {
+	t := reflect.TypeOf(s)
+	field, _ := t.FieldByName(structField)
+
+	return field.Tag.Get("csv")
 }
